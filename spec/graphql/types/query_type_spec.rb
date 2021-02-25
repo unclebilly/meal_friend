@@ -20,9 +20,33 @@ RSpec.describe Types::QueryType do
       MealFriendSchema.execute(query).as_json
     end
 
-    it "returns all items" do
+    it "returns all MealPlans" do
       expect(result.dig("data", "mealPlans")).to match_array(
         meal_plans.map { |mp| { "startAt" => mp.start_at.iso8601, "endAt" => mp.end_at.iso8601 } }
+      )
+    end
+  end
+
+  describe "items" do
+    let!(:items) {
+      [Item.create!(name: "Jelly Spaghetti")]
+    }
+
+    let(:query) do 
+      %(query {
+        items {
+          name
+        }
+      })
+    end
+
+    subject(:result) do 
+      MealFriendSchema.execute(query).as_json
+    end
+
+    it "returns all Items" do
+      expect(result.dig("data", "items")).to match_array(
+        items.map {|i| {"name" => i.name }}
       )
     end
   end

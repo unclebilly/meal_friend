@@ -12,8 +12,17 @@ module Types
       null: false,
       description: "Returns a list of meal plans"
 
+    field :items,
+      [Types::ItemType],
+      null: false,
+      description: "Returns a list of items, which could be one of (#{Item.item_types.keys.to_sentence})"
+
     def meal_plans
       MealPlan.all
+    end
+
+    def items
+      Item.all
     end
   end
 end

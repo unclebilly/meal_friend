@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_040305) do
+ActiveRecord::Schema.define(version: 2021_02_25_154220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_enum :item_type, [
+    "entree",
+    "dessert",
+    "drink",
+    "side",
+  ], force: :cascade
+
+  create_table "items", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "url"
+    t.string "prep_text"
+    t.text "description"
+    t.integer "prep_offset_hours"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.enum "item_type", enum_name: "item_type"
+  end
 
   create_table "meal_plans", force: :cascade do |t|
     t.datetime "start_at", null: false
