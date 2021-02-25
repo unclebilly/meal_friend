@@ -5,7 +5,7 @@ I have trouble thinking of what to plan for our family meals on a weekly basis. 
 * I can enter an existing meal plan into a form.
   * a meal plan is a collection of dates with associated entrees/sides/desserts.  
   * Entree / Side / Dessert
-    * When I choose an autosuggsted item it appears in the list. 
+    * When I choose an auto-suggested item it appears in the list. 
     * When i choose to create one, a form opens which allows: 
       * item type (entree/dessert/side)
       * URL (to recipe?)
@@ -16,3 +16,34 @@ I have trouble thinking of what to plan for our family meals on a weekly basis. 
 * I can see a list of meals and sort by frequency or popularity. 
 * I can rate a meal.
 * I see auto-suggestions of entrees/sides/desserts when entering them into a meal plan.
+
+Schema
+===
+
+    MealPlan
+      start day
+      end day
+      has many MealPlanEntry
+    
+    MealPlanEntry
+      date
+      rating
+      belongs to Meal
+      belongs to MealPlan
+    
+    Meal
+      has many MealPlanEntry
+      has many MealItem
+    
+    MealItem
+      belongs to Meal
+      belongs to Item
+    
+    Item
+      has many MealItem
+      enum entree, side, dessert
+      name
+      url
+      recipe text
+      prep text
+      prep offset time
